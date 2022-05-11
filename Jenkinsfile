@@ -93,6 +93,9 @@ pipeline {
         stage('configureingress') { 
             steps {
                 sh 'echo stage configureingress'
+                sh 'kubectl apply -f https://raw.githubusercontent.com/arrsvjes/ctt-devops-eks/main/ingresses-jenkins.yaml'
+                sh 'kubectl apply -f https://raw.githubusercontent.com/arrsvjes/ctt-devops-eks/main/ingresses-nexus.yaml'
+                sh 'kubectl apply -f https://raw.githubusercontent.com/arrsvjes/ctt-devops-eks/main/ingresses-gitlab.yaml'
             }
         }
     }
