@@ -1,0 +1,48 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins
+  labels:
+    app.kubernetes.io/name: jenkins
+    app.kubernetes.io/instance: jenkins 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonar
+  labels:
+    version: v1
+  namespace: jenkins
+spec:
+  selector:
+    matchLabels:
+      app: sonar
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sonar
+        version: v1
+    spec:
+      containers:
+      - name: sonar
+        image: docker.io/sonarqube
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonar
+  labels:
+    version: v1
+  namespace: jenkins
+spec:
+  type: ClusterIP
+  ports:
+  - name: web
+    port: 80
+    targetPort: 9000
+  selector:
+    app: sonar
+    version: v1
