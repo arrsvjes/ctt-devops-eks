@@ -104,6 +104,7 @@ pipeline {
     }
     post {
         always {
+            sh 'sleep 30 && echo "Pausa de 30 seg, esperando se complete rollout"'
             archiveArtifacts artifacts: 'kubeconfig', onlyIfSuccessful: true
             sh 'kubectl get ingress -n jenkins > URL-Devops.txt'
             archiveArtifacts artifacts: 'URL-Devops.txt', onlyIfSuccessful: true
